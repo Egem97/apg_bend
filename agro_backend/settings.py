@@ -90,11 +90,15 @@ if os.getenv('POSTGRES_DB'):
     }
 """
 DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+        'OPTIONS': {
+            'timeout': 30,  # Timeout para conexiones
+            'check_same_thread': True,  # Permitir múltiples hilos
         }
     }
+}
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -181,3 +185,33 @@ CORS_ALLOW_CREDENTIALS = True
 EXTERNAL_QUALITY_API_URL = 'http://34.136.15.241:8001'
 EXTERNAL_QUALITY_API_USERNAME = 'admin'
 EXTERNAL_QUALITY_API_PASSWORD = 'admin123'
+
+# Performance optimizations
+if not DEBUG:
+    # Cache configuration
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'unique-snowflake',
+        }
+    }
+    
+    # Session configuration
+    SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+    SESSION_CACHE_ALIAS = 'default'
+    
+    # Security settings for production
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'
+    
+    # Static files optimization
+    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+    
+    # Database optimization for async
+    DATABASES['default']['OPTIONS']['timeout'] = 30
+    DATABASES['default']['OPTIONS']['check_same_thread'] = False
+    
+    # Gevent optimizations
+    import gevent.monkey
+    gevent.monkey.patch_all()

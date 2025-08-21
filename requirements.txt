@@ -8,6 +8,7 @@ psycopg2-binary==2.9.10
 setuptools
 gunicorn==21.2.0
 whitenoise==6.6.0
+gevent==23.9.1
 
 aiohttp
 requests
