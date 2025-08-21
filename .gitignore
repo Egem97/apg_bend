@@ -26,8 +26,8 @@ MANIFEST
 # Django
 *.log
 local_settings.py
-db.sqlite3
-db.sqlite3-journal
+
+
 media/
 staticfiles/
 static_collected/
@@ -119,7 +119,8 @@ coverage/
 ._*
 .Spotlight-V100
 .Trashes
-ehthumbs.db
+ehthumbs.
+
 Thumbs.db
 Desktop.ini
 
@@ -134,9 +135,7 @@ temp/
 *.old
 
 # Database files
-*.db
-*.sqlite
-*.sqlite3
+
 
 # Configuration files with sensitive data
 config.json
@@ -192,7 +191,9 @@ typings/
 # FuseBox cache
 .fusebox/
 
-# DynamoDB Local files
+# Dynamo
+
+
 .dynamodb/
 
 # TernJS port file
