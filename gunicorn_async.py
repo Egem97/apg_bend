@@ -8,23 +8,8 @@ Importa gevent ANTES de cualquier import de Django
 import gevent.monkey
 gevent.monkey.patch_all()
 
-# Configurar SQLite para gevent
-import sqlite3
-import threading
-
-# Hacer SQLite thread-safe
-sqlite3.threadsafety = 1
-
-# Lock global para SQLite
-_sqlite_lock = threading.Lock()
-
-def sqlite_connect(*args, **kwargs):
-    """Conexión SQLite thread-safe"""
-    with _sqlite_lock:
-        return sqlite3.connect(*args, **kwargs)
-
-# Reemplazar la función connect
-sqlite3.connect = sqlite_connect
+# Importar configuración SQLite thread-safe
+import sqlite_gevent
 
 # Ahora importar Django
 import os

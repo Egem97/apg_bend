@@ -10,8 +10,8 @@ services:
       - SECRET_KEY=your-secret-key-change-in-production
       - DJANGO_SETTINGS_MODULE=agro_backend.settings
     volumes:
-      # Comentar la base de datos para que se cree dentro del contenedor
-      # - ./db.sqlite3:/app/db.sqlite3:rw
+      # Montar base de datos con permisos correctos
+      - ./db.sqlite3:/app/db.sqlite3:rw
       # Montar archivos media para persistencia
       - ./media:/app/media:rw
       # Montar archivos estáticos para persistencia

@@ -6,6 +6,9 @@ Django settings for agro_backend project.
 import gevent.monkey
 gevent.monkey.patch_all()
 
+# Importar configuración SQLite thread-safe
+import sqlite_gevent
+
 from pathlib import Path
 from decouple import config
 from datetime import timedelta
