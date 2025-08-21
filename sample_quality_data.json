@@ -1,0 +1,17 @@
+{
+  "empresa": "AgroExport S.A.",
+  "fecha_registro": "2024-01-15T10:30:00",
+  "temperatura": 24.5,
+  "humedad": 68.2,
+  "ph": 6.9,
+  "firmeza": 87.5,
+  "solidos_solubles": 13.2,
+  "acidez_titulable": 0.75,
+  "defectos_porcentaje": 1.8,
+  "defectos_descripcion": "Algunos frutos con pequeñas manchas superficiales",
+  "calibre": "20-22mm",
+  "color": "Azul profundo uniforme",
+  "calidad_general": "excelente",
+  "aprobado": true,
+  "observaciones": "Lote de alta calidad, listo para exportación"
+}

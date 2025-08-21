@@ -1,0 +1,19 @@
+# Configuraciones específicas para desarrollo
+# Este archivo se usa automáticamente por docker-compose
+
+version: '3.8'
+
+services:
+  web:
+    # Configuraciones adicionales para desarrollo
+    environment:
+      - DEBUG=True  # Cambiar a False en producción
+    volumes:
+      # Montar el código fuente para desarrollo en tiempo real
+      - .:/app
+      # Excluir archivos que no necesitan sincronización
+      - /app/venv
+      - /app/__pycache__
+      - /app/.git
+    # Comando alternativo para desarrollo (con recarga automática)
+    # command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]

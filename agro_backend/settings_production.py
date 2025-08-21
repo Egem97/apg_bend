@@ -163,7 +163,7 @@ SIMPLE_JWT = {
 }
 
 # CORS settings para producción
-CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', 'https://your-domain.com,https://www.your-domain.com').split(',')
+CORS_ALLOWED_ORIGINS = ["http://34.136.15.241:3000","http://localhost:3000","http://127.0.0.1:3000"]
 
 CORS_ALLOW_CREDENTIALS = True
 
