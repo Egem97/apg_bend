@@ -2,6 +2,10 @@
 Django settings for agro_backend project.
 """
 
+# Gevent monkey patching debe ir ANTES de cualquier import de Django
+import gevent.monkey
+gevent.monkey.patch_all()
+
 from pathlib import Path
 from decouple import config
 from datetime import timedelta
@@ -95,7 +99,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
         'OPTIONS': {
             'timeout': 30,  # Timeout para conexiones
-            'check_same_thread': True,  # Permitir múltiples hilos
+            'check_same_thread': False,  # Necesario para gevent
         }
     }
 }
@@ -211,7 +215,3 @@ if not DEBUG:
     # Database optimization for async
     DATABASES['default']['OPTIONS']['timeout'] = 30
     DATABASES['default']['OPTIONS']['check_same_thread'] = False
-    
-    # Gevent optimizations
-    import gevent.monkey
-    gevent.monkey.patch_all()
