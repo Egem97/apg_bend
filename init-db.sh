@@ -1,32 +1,30 @@
 #!/bin/bash
 
-# Script de entrada para Docker
+# Script para inicializar la base de datos con permisos correctos
 set -e
 
-echo "🚀 Iniciando aplicación Django..."
+echo "🔧 Inicializando base de datos..."
 
-# Esperar un momento para que todo esté listo
-sleep 2
+# Crear directorios si no existen
+mkdir -p media staticfiles
 
-# Verificar y crear archivo de base de datos si no existe
-if [ ! -f /app/db.sqlite3 ]; then
+# Crear archivo de base de datos si no existe
+if [ ! -f db.sqlite3 ]; then
     echo "📄 Creando archivo de base de datos..."
-    touch /app/db.sqlite3
-    chmod 666 /app/db.sqlite3
+    touch db.sqlite3
 fi
 
-# Verificar permisos de la base de datos
-if [ ! -w /app/db.sqlite3 ]; then
-    echo "🔐 Estableciendo permisos de escritura en la base de datos..."
-    chmod 666 /app/db.sqlite3
-fi
+# Establecer permisos correctos
+echo "🔐 Estableciendo permisos..."
+chmod 666 db.sqlite3
+chmod 755 media staticfiles
 
 # Ejecutar migraciones
 echo "🔄 Ejecutando migraciones..."
 python manage.py migrate --noinput
 
-# Crear superusuario si no existe (opcional)
-echo "Verificando superusuario..."
+# Crear superusuario si no existe
+echo "👤 Verificando superusuario..."
 python manage.py shell -c "
 from django.contrib.auth import get_user_model
 from apps.authentication.models import Company
@@ -45,9 +43,9 @@ company, created = Company.objects.get_or_create(
 )
 
 if created:
-    print('Empresa creada:', company.name)
+    print('✅ Empresa creada:', company.name)
 else:
-    print('Empresa existente:', company.name)
+    print('✅ Empresa existente:', company.name)
 
 # Verificar si existe usuario admin
 if not User.objects.filter(email='admin@example.com').exists():
@@ -63,18 +61,15 @@ if not User.objects.filter(email='admin@example.com').exists():
             is_superuser=True,
             is_active=True
         )
-        print('Superusuario creado: admin@example.com/admin123')
+        print('✅ Superusuario creado: admin@example.com/admin123')
     except Exception as e:
-        print('Error al crear superusuario:', str(e))
+        print('❌ Error al crear superusuario:', str(e))
 else:
-    print('Superusuario ya existe')
+    print('✅ Superusuario ya existe')
 "
 
 # Recolectar archivos estáticos
-echo "Recolectando archivos estáticos..."
+echo "📦 Recolectando archivos estáticos..."
 python manage.py collectstatic --noinput
 
-echo "Aplicación lista para ejecutar!"
-
-# Ejecutar el comando principal
-exec "$@"
+echo "✅ Base de datos inicializada correctamente!"

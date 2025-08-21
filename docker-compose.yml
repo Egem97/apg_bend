@@ -11,11 +11,12 @@ services:
       - DJANGO_SETTINGS_MODULE=agro_backend.settings
     volumes:
       # Montar la base de datos SQLite para persistencia
-      - ./db.sqlite3:/app/db.sqlite3
+      - ./db.sqlite3:/app/db.sqlite3:rw
       # Montar archivos media para persistencia
-      - ./media:/app/media
+      - ./media:/app/media:rw
       # Montar archivos estáticos para persistencia
-      - ./staticfiles:/app/staticfiles
+      - ./staticfiles:/app/staticfiles:rw
+    user: "1000:1000"  # Usar el mismo UID/GID que tu usuario local
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/api/"]
