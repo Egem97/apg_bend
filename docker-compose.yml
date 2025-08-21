@@ -37,5 +37,6 @@ services:
   #     - "5432:5432"
   #   restart: unless-stopped
 
-volumes:
-  # postgres_data:  # Descomentar si usas PostgreSQL
+# Volumes para PostgreSQL (descomentar si usas PostgreSQL)
+# volumes:
+#   postgres_data:
