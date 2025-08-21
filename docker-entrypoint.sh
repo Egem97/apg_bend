@@ -16,10 +16,43 @@ python manage.py migrate --noinput
 echo "Verificando superusuario..."
 python manage.py shell -c "
 from django.contrib.auth import get_user_model
+from apps.authentication.models import Company
+
 User = get_user_model()
-if not User.objects.filter(is_superuser=True).exists():
-    User.objects.create_superuser('admin', 'admin@example.com', 'admin123')
-    print('Superusuario creado: admin/admin123')
+
+# Crear empresa por defecto si no existe
+company, created = Company.objects.get_or_create(
+    name='Empresa Administradora',
+    defaults={
+        'domain': 'admin',
+        'rubro': 'tecnologia',
+        'pais': 'PE',
+        'activo': True
+    }
+)
+
+if created:
+    print('Empresa creada:', company.name)
+else:
+    print('Empresa existente:', company.name)
+
+# Verificar si existe usuario admin
+if not User.objects.filter(email='admin@example.com').exists():
+    try:
+        admin_user = User.objects.create_user(
+            email='admin@example.com',
+            username='admin@example.com',
+            first_name='Administrador',
+            last_name='Sistema',
+            password='admin123',
+            company=company,
+            is_staff=True,
+            is_superuser=True,
+            is_active=True
+        )
+        print('Superusuario creado: admin@example.com/admin123')
+    except Exception as e:
+        print('Error al crear superusuario:', str(e))
 else:
     print('Superusuario ya existe')
 "

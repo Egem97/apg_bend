@@ -14,6 +14,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         gcc \
         libpq-dev \
+        curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Copiar requirements y instalar dependencias de Python
@@ -39,4 +40,4 @@ EXPOSE 8000
 
 # Usar el script de entrada
 ENTRYPOINT ["/app/docker-entrypoint.sh"]
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "--timeout", "120", "agro_backend.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "1", "--timeout", "120", "agro_backend.wsgi:application"]

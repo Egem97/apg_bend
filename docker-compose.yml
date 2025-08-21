@@ -18,11 +18,11 @@ services:
       - ./staticfiles:/app/staticfiles
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/admin/"]
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/"]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 40s
+      start_period: 60s
 
   # Servicio opcional para desarrollo con PostgreSQL (comentado)
   # db:
