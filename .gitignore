@@ -297,3 +297,4 @@ jspm_packages/
 # Media files (user uploads)
 uploads/
 *.md
+docker-entrypoint.sh

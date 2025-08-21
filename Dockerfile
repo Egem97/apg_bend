@@ -28,7 +28,7 @@ COPY . .
 RUN mkdir -p /app/staticfiles /app/media
 
 # Hacer ejecutable el script de entrada
-RUN chmod +x /app/docker-entrypoint.sh
+
 
 # Crear usuario no-root para seguridad
 RUN adduser --disabled-password --gecos '' appuser
